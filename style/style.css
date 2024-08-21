@@ -1,0 +1,29 @@
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: #F3F4FE;
+}
+
+.row{
+    padding: 20px;
+}
+
+#self-photo{
+    width: 140px;
+}
+
+@media screen and (min-width: 990px) {
+    #full-data{
+        border-left: 1px solid silver;
+    }
+}
+@media screen and (max-width: 990px) {
+    #responsive-identity {
+        text-align: center;
+        margin-bottom: 5vh;
+    }
+
+    #full-data{
+        border-top: 1px solid silver;
+        padding-top: 5%;
+    }
+}
