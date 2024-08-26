@@ -1,9 +1,17 @@
 <!DOCTYPE html>
-<?php
-    include("connection.php");
-?>
 <html lang="en">
 <head>
+    <?php
+        session_destroy();
+
+        setcookie('nama', '', time()+300);
+        setcookie('role', '', time()+300);
+        setcookie('avail', '', time()+300);
+        setcookie('age', '', time()+300);
+        setcookie('lokasi', '', time()+300);
+        setcookie('email', '', time()+300);
+        setcookie('exp', '', time()+300);   
+    ?>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="style/style.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -40,11 +48,47 @@
         </div>
     </nav>
     <div class="container mt-3">
-        <?php if(isset($_SESSION['connStatus'])){ ?>
-        <div class="alert alert-danger" role="alert">
-            <b><?php echo $_SESSION['connStatus']; ?>
-        </div>
-        <?php } ?>
+        <!-- <div class="row">
+            <div class="col-lg-12 card">
+                <div class="row" id="first-row">
+                    <div class="col-lg-2 d-flex justify-content-center">
+                        <img src="img/Adam Ghirvan Fadhil.png" id="self-photo">
+                    </div>
+                    <div class="col-lg-5 mt-3" id="responsive-identity">
+                        <h1 id="chg-name"><?php echo $nama ? $nama : "-" ?></h1>
+                        <h3 id="chg-role"><?php echo $role ? $role : "-" ?></h3>
+
+                        <button class="btn btn-primary mt-3">Kontak</button>
+                        <button class="btn btn-success mt-3">Resume</button>
+                    </div>
+                    <div class="col-lg-5 mt-3" id="full-data">
+                        <h3>Full Data</h3>
+                        <table>
+                            <tr>
+                                <td><b>Availability</b></td>
+                                <td id="chg-avail">: <?php echo $avail ? $avail : "-" ?></td>
+                            </tr>
+                            <tr>
+                                <td><b>Usia</b></td>
+                                <td id="chg-age">: <?php echo $age ? $age . " tahun" : "-" ?></td>
+                            </tr>
+                            <tr>
+                                <td><b>Lokasi</b></td>
+                                <td id="chg-lokasi">: <?php echo $lokasi ? $lokasi : "-" ?></td>
+                            </tr>
+                            <tr>
+                                <td><b>Pengalaman</b></td>
+                                <td id="chg-exp">: <?php echo $exp ? $exp . " tahun" : "-" ?></td>
+                            </tr>
+                            <tr>
+                                <td><b>Email</b></td>
+                                <td id="chg-email">: <?php echo $email ? $email : "-" ?></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div> -->
         <div class="row">
             <div class="card col-lg-12">
                 <form action="index-2.php" method="POST">
@@ -57,8 +101,8 @@
                     <label class="form-label">Availability</label>
                     <select class="form-control mt-3 mb-3" name="avail" id="avail">
                         <option value="">Pilih Availability</option>
-                        <option value="Fulltime">Full Time</option>
-                        <option value="Parttime">Part Time</option>
+                        <option value="Full Time">Full Time</option>
+                        <option value="Part Time">Part Time</option>
                         <option value="Internship">Internship</option>
                     </select>
 
@@ -74,7 +118,8 @@
                     <label class="form-label">Email</label>
                     <input type="text" class="form-control mt-3 mb-3" name="email" id="email">
         
-                    <button type="submit" class="btn btn-success btn-block mb-3" id="tombol" name="submitData">Submit</button>
+                    <button type="submit" class="btn btn-success btn-block mb-3" id="tombol" name="sub-session">Submit Session</button>
+                    <button type="submit" class="btn btn-success btn-block mb-3" id="tombol" name="sub-cookies">Submit Cookies</button>
                 </form>
             </div>
         </div>

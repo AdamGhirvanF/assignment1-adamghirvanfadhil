@@ -2,7 +2,41 @@
 <html lang="en">
 <head>
     <?php
-        include("connection.php");
+        $loadedFrom;
+        if(isset($_POST["sub-session"])) {
+            session_start();
+            $_SESSION['nama'] = @$_POST['nama'];
+            $_SESSION["role"] = @$_POST['role'];
+            $_SESSION['avail'] = @$_POST['avail'];
+            $_SESSION['age'] = @$_POST['age'];
+            $_SESSION['lokasi'] = $_POST['lokasi'];
+            $_SESSION['email'] = @$_POST['email'];
+            $_SESSION['exp'] = $_POST['exp'];
+
+            $nama = $_SESSION['nama'];
+            $role = $_SESSION['role'];
+            $avail = $_SESSION['avail'];
+            $age = $_SESSION['age'];
+            $lokasi = $_SESSION['lokasi'];
+            $email = $_SESSION['email'];
+            $exp = $_SESSION['exp'];
+            $loadedFrom = "Data diperoleh melalui <b>Session</b>";
+        } else {
+            setcookie('nama', $_POST['nama'], time()+300);
+            setcookie('role', $_POST['role'], time()+300);
+            setcookie('avail', $_POST['avail'], time()+300);
+            setcookie('age', $_POST['age'], time()+300);
+            setcookie('lokasi', $_POST['lokasi'], time()+300);
+            setcookie('email', $_POST['email'], time()+300);
+            setcookie('exp', $_POST['exp'], time()+300);   
+            
+            $nama = $_COOKIE['nama'];
+            $role = $_COOKIE['role']; 
+            $loadedFrom = "Data diperoleh melalui <b>Cookies</b>";
+        }
+
+
+        
     ?>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="style/style.css">
@@ -43,11 +77,9 @@
         </div>
     </nav>
     <div class="container mt-3">
-    <?php if(isset($connStatus)){ ?>
     <div class="alert alert-info" role="alert">
-        <?php echo $connStatus; ?>
+        <?php echo $loadedFrom; ?>
     </div>
-    <?php } ?>
         <div class="row">
             <div class="col-lg-12 card">
                 <div class="row" id="first-row">
@@ -66,17 +98,34 @@
                         <table>
                             <?php 
                                 $listLabel = ["Availability", "Usia", "Lokasi", "Pengalaman", "Email"];
-                                $infoFields = [$avail, $age, $lokasi, $exp, $email];
+                                $infoFields = ["avail", "age", "lokasi", "exp", "email"];
 
                                 foreach($listLabel as $index => $label) {
                                     echo "<tr><td><b>".$label."</b></td>";
-                                    if($infoFields[$index] != []) {
-                                        echo "<td>: ". $infoFields[$index] ."</td></tr>";
-                                    } else {
-                                        echo "<td>: Data Kosong</td></tr>";
-                                    }
+                                    if($_POST[$infoFields[$index]] != "") echo "<td>: ". $_POST[$infoFields[$index]] ."</td></tr>";
+                                    else echo "<td>: Data Kosong</td></tr>";                                  
                                 }
                             ?>
+                            <!-- <tr>
+                                <td><b>Availability</b></td>
+                                <td id="chg-avail">: <?php echo $avail ? $avail : "-" ?></td>
+                            </tr>
+                            <tr>
+                                <td><b>Usia</b></td>
+                                <td id="chg-age">: <?php echo $age ? $age . " tahun" : "-" ?></td>
+                            </tr>
+                            <tr>
+                                <td><b>Lokasi</b></td>
+                                <td id="chg-lokasi">: <?php echo $lokasi ? $lokasi : "-" ?></td>
+                            </tr>
+                            <tr>
+                                <td><b>Pengalaman</b></td>
+                                <td id="chg-exp">: <?php echo $exp ? $exp . " tahun" : "-" ?></td>
+                            </tr>
+                            <tr>
+                                <td><b>Email</b></td>
+                                <td id="chg-email">: <?php echo $email ? $email : "-" ?></td>
+                            </tr> -->
                         </table>
                     </div>
                 </div>
@@ -85,4 +134,37 @@
     </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- <script>
+    $(document).ready(function(){
+        $('#tombol').click(function(e){
+            e.preventDefault();
+
+            var nama = $('#nama').val();
+            var role = $('#role').val();
+            var avail = $('#avail').val();
+            var age = $('#age').val();
+            var lokasi = $('#lokasi').val();
+            var exp = $('#exp').val();
+            var email = $('#email').val();
+            
+            if(nama == "" || role == "" || avail == "" || lokasi == "" || age == "" || exp == "" || email == ""){
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Formulir belum lengkap',
+                    icon: 'error',
+                    confirmButtonText: 'Lengkapkan Formulir'
+                })  
+            } else {
+                $("#chg-name").html(nama);
+                $("#chg-role").html(role);
+                $("#chg-avail").html(avail);
+                $("#chg-age").html(age);
+                $("#chg-lokasi").html(lokasi);
+                $("#chg-exp").html(exp);
+                $("#chg-email").html(email);
+            }
+        });
+    });
+
+</script> -->
 </html>
